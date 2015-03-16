@@ -1,6 +1,7 @@
 docs
 downloads
 node_modules
+bower_components
 src/*.css
 src/*.map
 *~

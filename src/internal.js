@@ -371,6 +371,7 @@ function renderColumnSelection(actions)
                             that.element.find("tbody").empty(); // Fixes an column visualization bug
                             renderTableHeader.call(that);
                             loadData.call(that);
+                            that.element.trigger("columnStateChanged" + namespace, [column.id, column.visible]);
                         }
                     });
             dropDown.find(getCssSelector(css.dropDownMenuItems)).append(item);
@@ -646,30 +647,22 @@ function registerRowEvents(tbody)
             });
     }
 
-    tbody.off("click" + namespace, "> tr")
-        .on("click" + namespace, "> tr", function(e)
+    tbody.off("click" + namespace, "> tr > td")
+        .on("click" + namespace, "> tr > td", function(e)
         {
             e.stopPropagation();
 
-            var $this = $(this),
-                id = (that.identifier == null) ? $this.data("row-id") : 
+            var $this = $(this).closest("tr"),
+                id = (that.identifier == null) ? $this.data("row-id") :
                     that.converter.from($this.data("row-id") + ""),
-                row = (that.identifier == null) ? that.currentRows[id] : 
-                    that.currentRows.first(function (item) { return item[that.identifier] === id; });
+                row = (that.identifier == null) ? that.currentRows[id] :
+                    that.currentRows.first(function (item) {
+                      return item[that.identifier] === id;
+                    });
 
-            if (that.selection && that.options.rowSelect)
-            {
-                if ($this.hasClass(that.options.css.selected))
-                {
-                    that.deselect([id]);
-                }
-                else
-                {
-                    that.select([id]);
-                }
+            if(!$(this).is('.select-cell')){
+              that.element.trigger("click" + namespace, [that.columns, row]);
             }
-
-            that.element.trigger("click" + namespace, [that.columns, row]);
         });
 }
 

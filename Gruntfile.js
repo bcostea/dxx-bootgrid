@@ -124,7 +124,6 @@ module.exports = function (grunt)
                     globals: {
                         jQuery: true,
                         $: true,
-                        QUnit: true,
                         module: true,
                         test: true,
                         start: true,
@@ -199,10 +198,6 @@ module.exports = function (grunt)
             }
         },
 
-        qunit: {
-            files: ['test/index.html']
-        },
-
         exec: {
             publish: {
                 cmd: 'npm publish .'
@@ -219,7 +214,6 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
@@ -231,7 +225,7 @@ module.exports = function (grunt)
 
     grunt.registerTask('default', ['build']);
     grunt.registerTask('api', ['clean:api', 'yuidoc']);
-    grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint', 'jshint', 'qunit']);
+    grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint', 'jshint']);
     grunt.registerTask('release', ['build', 'api', 'cssmin', 'uglify', 'compress', 'nugetpack']);
     grunt.registerTask('publish', ['nugetpush', 'exec:publish']);
 };
