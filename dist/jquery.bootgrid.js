@@ -1,5 +1,5 @@
 /*! 
- * jQuery Bootgrid v1.1.4 - 03/16/2015
+ * jQuery Bootgrid v1.1.4 - 03/17/2015
  * Copyright (c) 2015 Rafael Staib (http://www.jquery-bootgrid.com)
  * Licensed under MIT http://www.opensource.org/licenses/MIT
  */
@@ -1489,8 +1489,8 @@ Grid.prototype.deselect = function(rowIds)
                     .removeClass(this.options.css.selected)._bgAria("selected", "false")
                     .find(selectBoxSelector).prop("checked", false);
             }
-            
-            this.element.trigger("deselected" + namespace, [deselectedRows]);
+
+            this.element.trigger("deselected" + namespace, [deselectedRows, this.selectedRows]);
         }
     }
 

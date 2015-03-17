@@ -582,8 +582,8 @@ Grid.prototype.deselect = function(rowIds)
                     .removeClass(this.options.css.selected)._bgAria("selected", "false")
                     .find(selectBoxSelector).prop("checked", false);
             }
-            
-            this.element.trigger("deselected" + namespace, [deselectedRows]);
+
+            this.element.trigger("deselected" + namespace, [deselectedRows, this.selectedRows]);
         }
     }
 
