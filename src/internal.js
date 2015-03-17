@@ -66,6 +66,7 @@ function init()
     renderTableHeader.call(this);
     renderSearchField.call(this);
     renderActions.call(this);
+    renderRowActions.call(this);
     loadData.call(this);
 
     this.element.trigger("initialized" + namespace);
@@ -293,6 +294,19 @@ function prepareTable()
         this.footer = $(tpl.footer.resolve(getParams.call(this, { id: this.element._bgId() + "-footer" })));
         wrapper.after(this.footer);
     }
+}
+
+function renderRowActions(){
+        var css = this.options.css,
+            selector = getCssSelector(css.rowActions),
+            headerActions = this.header.find(selector);
+
+        var that = this,
+            tpl = this.options.templates,
+            rowActions = $(tpl.rowActions.resolve(getParams.call(this)));
+
+        rowActions.append($('aaaaa'));
+        replacePlaceHolder.call(this, headerActions, rowActions, 1);
 }
 
 function renderActions()

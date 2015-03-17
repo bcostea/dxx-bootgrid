@@ -76,6 +76,7 @@ function init()
     renderTableHeader.call(this);
     renderSearchField.call(this);
     renderActions.call(this);
+    renderRowActions.call(this);
     loadData.call(this);
 
     this.element.trigger("initialized" + namespace);
@@ -303,6 +304,19 @@ function prepareTable()
         this.footer = $(tpl.footer.resolve(getParams.call(this, { id: this.element._bgId() + "-footer" })));
         wrapper.after(this.footer);
     }
+}
+
+function renderRowActions(){
+        var css = this.options.css,
+            selector = getCssSelector(css.rowActions),
+            headerActions = this.header.find(selector);
+
+        var that = this,
+            tpl = this.options.templates,
+            rowActions = $(tpl.rowActions.resolve(getParams.call(this)));
+
+        rowActions.append($('aaaaa'));
+        replacePlaceHolder.call(this, headerActions, rowActions, 1);
 }
 
 function renderActions()
@@ -1107,6 +1121,7 @@ Grid.defaults = {
      **/
     css: {
         actions: "actions btn-group", // must be a unique class name or constellation of class names within the header and footer
+        rowActions: "row-actions pull-right",
         center: "text-center",
         columnHeaderAnchor: "column-header-anchor", // must be a unique class name or constellation of class names within the column header cell
         columnHeaderText: "text",
@@ -1199,10 +1214,11 @@ Grid.defaults = {
         actionDropDownItem: "<li><a href=\"{{ctx.uri}}\" class=\"{{css.dropDownItem}} {{css.dropDownItemButton}}\">{{ctx.text}}</a></li>",
         actionDropDownCheckboxItem: "<li><label class=\"{{css.dropDownItem}}\"><input name=\"{{ctx.name}}\" type=\"checkbox\" value=\"1\" class=\"{{css.dropDownItemCheckbox}}\" {{ctx.checked}} /> {{ctx.label}}</label></li>",
         actions: "<div class=\"{{css.actions}}\"></div>",
+        rowActions: "<div class=\"{{css.rowActions}}\"></div>",
         body: "<tbody></tbody>",
         cell: "<td class=\"{{ctx.css}}\">{{ctx.content}}</td>",
         footer: "<div id=\"{{ctx.id}}\" class=\"{{css.footer}}\"><div class=\"row\"><div class=\"col-sm-6\"><p class=\"{{css.pagination}}\"></p></div><div class=\"col-sm-6 infoBar\"><p class=\"{{css.infos}}\"></p></div></div></div>",
-        header: "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"><p class=\"{{css.search}}\"></p><p class=\"{{css.actions}}\"></p></div></div></div>",
+        header: "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-8 actionBar\"><p class=\"{{css.search}}\"></p><p class=\"{{css.actions}}\"></p></div><div class=\"col-sm-4\"><p class=\"{{css.rowActions}}\"></p></div></div></div>",
         headerCell: "<th data-column-id=\"{{ctx.column.id}}\" class=\"{{ctx.css}}\"><a href=\"javascript:void(0);\" class=\"{{css.columnHeaderAnchor}} {{ctx.sortable}}\"><span class=\"{{css.columnHeaderText}}\">{{ctx.column.text}}</span>{{ctx.icon}}</a></th>",
         icon: "<span class=\"{{css.icon}} {{ctx.iconCss}}\"></span>",
         infos: "<div class=\"{{css.infos}}\">{{lbl.infos}}</div>",
