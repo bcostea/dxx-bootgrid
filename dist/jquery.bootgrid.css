@@ -52,9 +52,7 @@
 .bootgrid-footer .infoBar .btn-group > .btn-group .dropdown-menu .dropdown-item:hover,
 .bootgrid-header .actionBar .btn-group > .btn-group .dropdown-menu .dropdown-item:focus,
 .bootgrid-footer .infoBar .btn-group > .btn-group .dropdown-menu .dropdown-item:focus {
-  color: #262626;
   text-decoration: none;
-  background-color: #f5f5f5;
 }
 .bootgrid-header .actionBar .btn-group > .btn-group .dropdown-menu .dropdown-item.dropdown-item-checkbox,
 .bootgrid-footer .infoBar .btn-group > .btn-group .dropdown-menu .dropdown-item.dropdown-item-checkbox,
@@ -74,7 +72,6 @@
   outline: 0;
 }
 .bootgrid-table th > .column-header-anchor {
-  color: #333;
   cursor: not-allowed;
   display: block;
   position: relative;
@@ -98,10 +95,6 @@
   right: 0;
   top: 2px;
 }
-.bootgrid-table th:hover,
-.bootgrid-table th:active {
-  background: #fafafa;
-}
 .bootgrid-table td {
   cursor: pointer;
   overflow: hidden;
@@ -112,7 +105,6 @@
 }
 .bootgrid-table td.loading,
 .bootgrid-table td.no-results {
-  background: #fff;
   text-align: center;
 }
 .bootgrid-table th.select-cell,
