@@ -202,11 +202,6 @@ module.exports = function (grunt)
             publish: {
                 cmd: 'npm publish .'
             }
-        },
-        nugetpush: {
-            default: {
-                src: '<%= folders.dist %>/*.nupkg'
-            }
         }
     });
 
@@ -220,12 +215,10 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-exec');
-    grunt.loadNpmTasks('grunt-nuget');
     grunt.loadNpmTasks('grunt-regex-replace');
 
     grunt.registerTask('default', ['build']);
     grunt.registerTask('api', ['clean:api', 'yuidoc']);
     grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint', 'jshint']);
-    grunt.registerTask('release', ['build', 'api', 'cssmin', 'uglify', 'compress', 'nugetpack']);
-    grunt.registerTask('publish', ['nugetpush', 'exec:publish']);
+    grunt.registerTask('release', ['build', 'api', 'cssmin', 'uglify', 'compress']);
 };
