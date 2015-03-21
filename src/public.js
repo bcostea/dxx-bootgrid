@@ -473,6 +473,15 @@ Grid.prototype.search = function(phrase)
 };
 
 /**
+ * Returns selected rows
+ * @method getSelections
+ *
+ **/
+Grid.prototype.getSelection = function(){
+  return this.selectedRows;
+};
+
+/**
  * Selects rows by ids. Selects all visible rows if no ids are provided.
  * In server-side scenarios only visible rows are selectable.
  *
