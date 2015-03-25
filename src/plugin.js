@@ -5,8 +5,8 @@ var old = $.fn.bootgrid;
 
 $.fn.bootgrid = function (option)
 {
-  if (this.length < 0) {
-    var args = Array.prototype.slice.call(arguments, 1);
+  var args = Array.prototype.slice.call(arguments, 1);
+  if (this.length > 0) {
 
     var that = this[0];
     var $this = $(that),
