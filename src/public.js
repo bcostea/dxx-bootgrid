@@ -58,7 +58,7 @@ var Grid = function(element, options)
  *   $("#bootgrid").bootgrid({ selection = true });
  **/
 Grid.defaults = {
-    navigation: 3, // it's a flag: 0 = none, 1 = top, 2 = bottom, 3 = both (top and bottom)
+    navigation: 2, // it's a flag: 0 = none, 1 = top, 2 = bottom, 3 = both (top and bottom)
     padding: 2, // page padding (pagination)
     columnSelection: true,
     rowCount: [10, 25, 50, -1], // rows per page int or array of int (-1 represents "All")
