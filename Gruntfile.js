@@ -243,6 +243,6 @@ module.exports = function (grunt)
     });
     grunt.registerTask('default', ['build']);
     grunt.registerTask('api', ['clean:api', 'yuidoc']);
-    grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint', 'jshint']);
+    grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint']);
     grunt.registerTask('release', ['build', 'api', 'cssmin', 'uglify', 'compress']);
 };
