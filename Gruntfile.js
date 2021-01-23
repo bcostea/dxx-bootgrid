@@ -7,9 +7,10 @@ module.exports = function (grunt)
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        fontawesome: 'fa',
         banner: '/*! <%= "\\r\\n * " + pkg.title %> v<%= pkg.version %> - <%= grunt.template.today("mm/dd/yyyy") + "\\r\\n" %>' +
-                ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %> <%= (pkg.homepage ? "(" + pkg.homepage + ")" : "") + "\\r\\n" %>' +
-                ' * Licensed under <%= pkg.licenses[0].type + " " + pkg.licenses[0].url + "\\r\\n */\\r\\n" %>',
+            ' * Copyright (c) 2014-<%= grunt.template.today("yyyy") %> <%= pkg.author.name %> <%= (pkg.homepage ? "(" + pkg.homepage + ")" : "") + "\\r\\n" %>' +
+            ' * Licensed under <%= pkg.licenses[0].type + " " + pkg.licenses[0].url + "\\r\\n */\\r\\n" %>',
         folders: {
             dist: "dist",
             docs: "docs",
@@ -20,6 +21,7 @@ module.exports = function (grunt)
             api: ["<%= folders.docs %>"],
             build: ["<%= folders.dist %>"]
         },
+
         yuidoc: {
             compile: {
                 name: '<%= pkg.name %>',
@@ -33,6 +35,15 @@ module.exports = function (grunt)
             }
         },
 
+        version: {
+            default: {
+                src: 'bower.json',
+                options: {
+                    version: '<%= pkg.version %>'
+                }
+            }
+        },
+
         less: {
             default: {
                 files: {
@@ -40,7 +51,6 @@ module.exports = function (grunt)
                 }
             }
         },
-
         concat: {
             scripts: {
                 options: {
@@ -73,6 +83,9 @@ module.exports = function (grunt)
                         '<%= folders.src %>/public.js',
                         '<%= folders.src %>/extensions.js',
                         '<%= folders.src %>/plugin.js'
+                    ],
+                    '<%= folders.dist %>/<%= pkg.namespace %>.<%= fontawesome %>.js': [
+                        '<%= folders.src %>/fontawesome.js'
                     ]
                 }
             },
@@ -169,7 +182,12 @@ module.exports = function (grunt)
                     report: 'gzip'
                 },
                 files: {
-                    '<%= folders.dist %>/<%= pkg.namespace %>.min.js': ['<%= folders.dist %>/<%= pkg.namespace %>.js']
+                    '<%= folders.dist %>/<%= pkg.namespace %>.min.js': [
+                        '<%= folders.dist %>/<%= pkg.namespace %>.js'
+                    ],
+                    '<%= folders.dist %>/<%= pkg.namespace %>.<%= fontawesome %>.min.js': [
+                        '<%= folders.dist %>/<%= pkg.namespace %>.<%= fontawesome %>.js'
+                    ]
                 }
             }
         },
@@ -217,6 +235,12 @@ module.exports = function (grunt)
     grunt.loadNpmTasks('grunt-exec');
     grunt.loadNpmTasks('grunt-regex-replace');
 
+    grunt.registerMultiTask('version', 'sets version tag', function ()
+    {
+        var pkg = grunt.file.readJSON(this.data.src);
+        pkg["version"] = this.data.options.version;
+        grunt.file.write(this.data.src, JSON.stringify(pkg, null, 4));
+    });
     grunt.registerTask('default', ['build']);
     grunt.registerTask('api', ['clean:api', 'yuidoc']);
     grunt.registerTask('build', ['clean:build', 'less', 'concat', 'csslint', 'jshint']);

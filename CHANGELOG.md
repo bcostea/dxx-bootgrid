@@ -1,5 +1,38 @@
 # Changelog
 
+## 1.3.1
+
+### Enhancements & Features
+- Replaced href attributes in order to prevent hash tags so *angular JS* works proper; see issue [#69](http://github.com/rstaib/jquery-bootgrid/issues/69) for more details
+
+### Breaking Changes
+There are no breaking changes but some HTML templates changed during development. In case you want to use the full new feature set be sure you did not override any affected (actionDropDownItem and paginationItem) templates.
+
+## 1.3.0
+
+### Enhancements & Features
+- Option to hide column from the selection box; see issue [#62](http://github.com/rstaib/jquery-bootgrid/issues/62) for more details
+
+## 1.2.0
+
+### Enhancements & Features
+- Configurable column width; see issue [#22](http://github.com/rstaib/jquery-bootgrid/issues/22) for more details
+- Contextual classes to color rows; see issue [#72](http://github.com/rstaib/jquery-bootgrid/issues/72) for more details
+- *FontAwesome* iconset overload
+- Clear search filter method [#89](http://github.com/rstaib/jquery-bootgrid/issues/89)
+- Overridable ajax request settings; see issue [#27](http://github.com/rstaib/jquery-bootgrid/issues/27) for more details
+- Adjusting search input field to perform search not on every key [#109](http://github.com/rstaib/jquery-bootgrid/issues/109)
+- Public getters for internal variables; see issues [#121](http://github.com/rstaib/jquery-bootgrid/issues/121) and [#116](http://github.com/rstaib/jquery-bootgrid/issues/116) for more details
+- Noticeable flicker on any table update [#118](http://github.com/rstaib/jquery-bootgrid/issues/118) (Partially improved by deferring loading mask)
+
+### Bug Fixes
+- Fixed bug [#120](http://github.com/rstaib/jquery-bootgrid/issues/120)
+- Fixed bug [#58](http://github.com/rstaib/jquery-bootgrid/issues/58) by using the pull request [#65](http://github.com/rstaib/jquery-bootgrid/issues/65)
+- Fixing sort method for jQuery plugin [#84](http://github.com/rstaib/jquery-bootgrid/issues/84)
+
+### Breaking Changes
+There are no breaking changes but some HTML templates changed during development. In case you want to use the full new feature set be sure you did not override any affected templates.
+
 ## 1.1.4
 
 ### Enhancements & Features
