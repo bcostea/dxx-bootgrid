@@ -65,6 +65,10 @@ function init() {
     renderSearchField.call(this);
     renderActions.call(this);
     renderRowActions.call(this);
+    
+    this.rowCount = this.options.currentRowCount;
+    this.currentRowCount = this.options.currentRowCount;
+
     loadData.call(this);
 
     this.element.trigger("initialized" + namespace);
@@ -315,6 +319,20 @@ function renderActions() {
                 actions.append(refresh);
             }
 
+            // Reset Button
+            if (this.options.ajax)
+            {
+                var reinitializeIcon = tpl.icon.resolve(getParams.call(this, { iconCss: css.iconReinitialize })),
+                    refresh = $(tpl.actionButton.resolve(getParams.call(this,
+                    { content: reinitializeIcon, text: this.options.labels.reinitialize })))
+                        .on("click" + namespace, function (e)
+                        {
+                            that.element.trigger("reset" + namespace);
+                            e.stopPropagation();
+                        });
+                actions.append(refresh);
+            }
+
             // Row count selection
             renderRowCountSelection.call(this, actions);
 
@@ -478,7 +496,7 @@ function renderRowCountSelection(actions) {
     if ($.isArray(rowCountList)) {
         var css = this.options.css,
             tpl = this.options.templates,
-            dropDown = $(tpl.actionDropDown.resolve(getParams.call(this, { content: getText(this.rowCount) }))),
+            dropDown = $(tpl.actionDropDown.resolve(getParams.call(this, { content: getText(this.options.currentRowCount) }))),
             menuSelector = getCssSelector(css.dropDownMenu),
             menuTextSelector = getCssSelector(css.dropDownMenuText),
             menuItemsSelector = getCssSelector(css.dropDownMenuItems),
@@ -487,7 +505,7 @@ function renderRowCountSelection(actions) {
         $.each(rowCountList, function (index, value) {
             var item = $(tpl.actionDropDownItem.resolve(getParams.call(that,
                 { text: getText(value), action: value })))
-                ._bgSelectAria(value === that.rowCount)
+                ._bgSelectAria(value === that.options.currentRowCount)
                 .on("click" + namespace, menuItemSelector, function (e) {
                     e.preventDefault();
 
@@ -506,7 +524,9 @@ function renderRowCountSelection(actions) {
                         loadData.call(that);
                     }
                 });
+            item.addClass("pageSizeItem");
             dropDown.find(menuItemsSelector).append(item);
+            dropDown.addClass("pageSizeSelector");
         });
         actions.append(dropDown);
     }
@@ -632,6 +652,10 @@ function renderSearchField() {
                 searchField = (search.is(searchFieldSelector)) ? search :
                     search.find(searchFieldSelector);
 
+            if(typeof that.options.searchPhrase !== "undefined"){
+                searchField.val(that.options.searchPhrase);
+            }
+            
             searchField.on("keyup" + namespace, function (e) {
                 e.stopPropagation();
                 var newValue = $(this).val();

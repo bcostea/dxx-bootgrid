@@ -17,16 +17,30 @@ var Grid = function (element, options) {
     // overrides rowCount explicitly because deep copy ($.extend) leads to strange behaviour
     var rowCount = this.options.rowCount = this.element.data().rowCount || options.rowCount || this.options.rowCount;
     this.columns = [];
-    this.current = 1;
+
+    if(typeof options.current !== 'undefined' && options.current!==null){
+        this.current = options.current;
+    } else {
+        this.current = 1;
+    }
+
     this.currentRows = [];
     this.identifier = null; // The first column ID that is marked as identifier
     this.selection = false;
     this.converter = null; // The converter for the column that is marked as identifier
     this.rowCount = ($.isArray(rowCount)) ? rowCount[0] : rowCount;
     this.rows = [];
-    this.searchPhrase = "";
+    if(typeof options.searchPhrase !== 'undefined' && options.searchPhrase!==null){
+        this.searchPhrase = options.searchPhrase;
+    } else {
+        this.searchPhrase = "";
+    }
     this.selectedRows = [];
-    this.sortDictionary = {};
+    if(typeof options.sort !== 'undefined' && options.sort!==null){
+        this.sortDictionary = options.sort;
+    } else {
+        this.sortDictionary = {};
+    }
     this.total = 0;
     this.totalPages = 0;
     this.cachedParams = {
@@ -59,6 +73,7 @@ Grid.defaults = {
     padding: 2, // page padding (pagination)
     columnSelection: true,
     rowCount: [10, 25, 50, -1], // rows per page int or array of int (-1 represents "All")
+    currentRowCount: 10,
 
     /**
      * Enables row selection (to enable multi selection see also `multiSelect`). Default value is `false`.
@@ -276,6 +291,7 @@ Grid.defaults = {
         iconColumns: "fa-list",
         iconDown: "fa-chevron-down",
         iconRefresh: "fa-refresh",
+        iconReinitialize: "fa-remove",
         iconUp: "fa-chevron-up",
         infos: "infos", // must be a unique class name or constellation of class names within the header and footer,
         left: "text-left",
@@ -337,6 +353,7 @@ Grid.defaults = {
         loading: "Loading...",
         noResults: "No results found!",
         refresh: "Refresh",
+        reinitialize: "Reset",
         search: "Search"
     },
 
@@ -410,7 +427,7 @@ Grid.defaults = {
         loading: "<tr><td colspan=\"{{ctx.columns}}\" class=\"loading\">{{lbl.loading}}</td></tr>",
         noResults: "<tr><td colspan=\"{{ctx.columns}}\" class=\"no-results\">{{lbl.noResults}}</td></tr>",
         pagination: "<ul class=\"{{css.pagination}} float-sm-right\"></ul>",
-        paginationItem: "<li class=\"{{ctx.css}}\"><a href=\"{{ctx.uri}}\" class=\"{{css.paginationButton}}\">{{ctx.text}}</a></li>",
+        paginationItem: "<li class=\"{{ctx.css}}\"><a data-page=\"{{ctx.page}}\" class=\"{{css.paginationButton}}\">{{ctx.text}}</a></li>",
         rawHeaderCell: "<th class=\"{{ctx.css}}\">{{ctx.content}}</th>", // Used for the multi select box
         row: "<tr{{ctx.attr}}>{{ctx.cells}}</tr>",
         search: "<div class=\"{{css.search}}\"><div class=\"input-group\"> <input type=\"text\" class=\"{{css.searchField}}\" placeholder=\"{{lbl.search}}\" /></div></div>",
@@ -499,6 +516,44 @@ Grid.prototype.reload = function () {
 
     return this;
 };
+
+
+Grid.prototype.reset = function()
+{
+    this.current = 1;
+    this.currentRowCount = this.options.rowCount[0];
+    this.rowCount = this.options.rowCount[0];
+    this.searchPhrase = "";
+    this.sort = [];
+    this.element.parent().find(".search-field").val("");
+
+    $(".pageSizeSelector .dropdown-item").each(function(idx, item){
+        $(item)._bgSelectAria($(item).data("action") == this.currentRowCount);
+    });
+
+    $(".pageSizeSelector .dropdown-text").text(this.currentRowCount);
+
+    loadData.call(this);
+
+    return this;
+};
+
+Grid.prototype.loadPage = function(phrase, page, pageSize)
+{
+    this.searchPhrase = phrase;
+
+    this.rowCount = pageSize;
+    this.current = page; 
+    loadData.call(this);
+
+    return this;
+};
+
+Grid.prototype.getOptions = function()
+{
+    return this;
+};
+
 
 /**
  * Removes rows by ids. Removes selected rows if no ids are provided.
