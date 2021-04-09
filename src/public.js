@@ -275,7 +275,7 @@ Grid.defaults = {
         icon: "icon fa",
         iconColumns: "fa-list",
         iconDown: "fa-chevron-down",
-        iconRefresh: "fa-sync-alt",
+        iconRefresh: "fa-refresh",
         iconUp: "fa-chevron-up",
         infos: "infos", // must be a unique class name or constellation of class names within the header and footer,
         left: "text-left",
@@ -396,7 +396,7 @@ Grid.defaults = {
     templates: {
         actionButton: "<button class=\"btn btn-default\" type=\"button\" title=\"{{ctx.text}}\">{{ctx.content}}</button>",
         actionDropDown: "<div class=\"{{css.dropDownMenu}}\"><button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\"><span class=\"{{css.dropDownMenuText}}\">{{ctx.content}}</span> <span class=\"caret\"></span></button><ul class=\"{{css.dropDownMenuItems}}\" role=\"menu\"></ul></div>",
-        actionDropDownItem: "<li><a href=\"{{ctx.uri}}\" class=\"{{css.dropDownItem}} {{css.dropDownItemButton}}\">{{ctx.text}}</a></li>",
+        actionDropDownItem: "<li><a data-action=\"{{ctx.action}}\" class=\"{{css.dropDownItem}} {{css.dropDownItemButton}}\">{{ctx.text}}</a></li>",
         actionDropDownCheckboxItem: "<li><label class=\"{{css.dropDownItem}}\"><input name=\"{{ctx.name}}\" type=\"checkbox\" value=\"1\" class=\"{{css.dropDownItemCheckbox}}\" {{ctx.checked}} /> {{ctx.label}}</label></li>",
         actions: "<div class=\"{{css.actions}}\"></div>",
         rowActions: "<div class=\"{{css.rowActions}}\"></div>",
